@@ -50,7 +50,7 @@ public class SimpleSampleCharacterControl : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision collision)
-    {/*
+    {
         ContactPoint[] contactPoints = collision.contacts;
         for (int i = 0; i < contactPoints.Length; i++)
         {
@@ -63,7 +63,7 @@ public class SimpleSampleCharacterControl : MonoBehaviour
                 m_isGrounded = true;
             }
         }
-        */
+        
     }
 
     private void OnCollisionStay(Collision collision)

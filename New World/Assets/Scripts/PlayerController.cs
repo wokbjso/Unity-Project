@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-
-    public float moveSpeed = 2;
-    public float turnSpeed = 200;
-    public float jumpForce = 4;
+    // 캐릭터 이동을 위한 변수
+    private float moveSpeed = 1;
+    private float turnSpeed = 200;
+    // private float jumpForce = 4;
 
     // input
     Vector3 dir;
@@ -16,14 +16,35 @@ public class PlayerController : MonoBehaviour
     private float inputJ;
     private float currentV;
 
-    public Rigidbody rigidbody;
-    public Animator animator;
+    [SerializeField] public Rigidbody rigidbody;
+    [SerializeField] public Animator animator;
+
+    // Animator 처리를 위한 변수
+    private List<Collider> collisions = new List<Collider>();
+    private bool isGround;
 
     // Start is called before the first frame update
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        ContactPoint[] contactPoints = collision.contacts;
+        for (int i = 0; i < contactPoints.Length; i++)
+        {
+            if (Vector3.Dot(contactPoints[i].normal, Vector3.up) > 0.5f)
+            {
+                if (!collisions.Contains(collision.collider))
+                {
+                    collisions.Add(collision.collider);
+                }
+                isGround = true;
+            }
+        }
+
     }
 
     // Update is called once per frame
@@ -34,6 +55,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        animator.SetBool("Grounded", isGround);
         GetInput();
         Walk();
         Jump();
