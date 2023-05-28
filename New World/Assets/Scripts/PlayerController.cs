@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
     {
         animator.SetBool("Grounded", isGround);
         Move();
-        Jump();
+       // Jump();
     }
 
     void Move()
@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour
         currentV = Mathf.Lerp(currentV, inputX, Time.fixedDeltaTime * 10);
         animator.SetFloat("MoveSpeed", dir.magnitude);
     }
-
+    /*
     void Jump()
     {
         if (Input.GetButtonDown("Jump"))
@@ -111,4 +111,5 @@ public class PlayerController : MonoBehaviour
             rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
     }
+    */
 }
